@@ -31,9 +31,8 @@ RUN mkdir -p /app/ComfyUI/models/checkpoints
 RUN mkdir -p /app/ComfyUI/input
 RUN mkdir -p /app/ComfyUI/output
 
-# Télécharge le modèle epiCRealismXL
-RUN wget -O /app/ComfyUI/models/checkpoints/epicrealismXL_v7.safetensors \
-    https://civitai.com/api/download/models/277058
+# NOTE: Le modèle sera téléchargé au premier lancement
+# Pour ajouter le modèle manuellement, placez-le dans /app/ComfyUI/models/checkpoints/
 
 # Copie le handler
 COPY handler.py /app/handler.py
@@ -44,5 +43,5 @@ RUN pip3 install --no-cache-dir runpod
 # Expose le port
 EXPOSE 8000
 
-# Commande de démarrage
-CMD ["python3", "/app/handler.py"]
+# Démarre ComfyUI en arrière-plan puis le handler
+CMD cd /app/ComfyUI && python3 main.py --listen 0.0.0.0 --port 8188 & sleep 10 && python3 /app/handler.py
