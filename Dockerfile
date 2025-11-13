@@ -31,8 +31,9 @@ RUN mkdir -p /app/ComfyUI/models/checkpoints
 RUN mkdir -p /app/ComfyUI/input
 RUN mkdir -p /app/ComfyUI/output
 
-# NOTE: Le modèle sera téléchargé au premier lancement
-# Pour ajouter le modèle manuellement, placez-le dans /app/ComfyUI/models/checkpoints/
+# Télécharge epiCRealismXL depuis Hugging Face
+RUN wget -O /app/ComfyUI/models/checkpoints/epicrealismXL_vxviiCrystalclear.safetensors \
+    https://huggingface.co/Lexazy/epicrealism-xl-v7/resolve/main/epicrealismXL_vxviiCrystalclear.safetensors
 
 # Copie le handler
 COPY handler.py /app/handler.py
